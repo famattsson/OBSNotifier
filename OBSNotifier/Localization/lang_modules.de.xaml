@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+    <!-- Use 
+ instead of \n -->
+    
+    <!-- Default Module -->
+    <v:String x:Key="default_module_name">Stapel von Benachrichtigungen</v:String>
+    <v:String x:Key="default_module_desc">Dies ist das Standard-Benachrichtigungsmodul.
+Es zeigt eine oder mehrere Benachrichtigungen in der Ecke des Monitors an.</v:String>
+
+    <!-- Nvidia-Like Module -->
+    <v:String x:Key="nvidia_like_module_name">Nvidia-Like</v:String>
+    <v:String x:Key="nvidia_like_module_desc">Einfache Benachrichtigung ähnlich wie Nvidias Benachrichtigungen</v:String>
+
+</ResourceDictionary>

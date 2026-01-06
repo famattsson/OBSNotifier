@@ -1,0 +1,56 @@
+name: ↗️ Update translations from the community
+run-name: "Update on '${{github.ref_name}}' '${{github.sha}}' #${{github.run_number}}"
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  update:
+    name: Update Translations
+    runs-on: ubuntu-latest
+
+    env:
+      CROWDIN_PROJECT_ID: ${{secrets.CROWDIN_PROJECT_ID}}
+      CROWDIN_PERSONAL_TOKEN: ${{secrets.CROWDIN_PERSONAL_TOKEN}}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Crowdin Download
+        uses: ./.github/actions/cached-download
+        with:
+          url: https://artifacts.crowdin.com/repo/deb/crowdin.deb
+          destination: publish/crowdin.deb
+          cache-key: crowdin.deb
+
+      - name: Crowdin Install
+        run: |
+          sudo dpkg -i publish/crowdin.deb
+
+      - name: Crowdin Pull
+        run: crowdin pull --no-progress
+
+      - name: Crowdin Status to file
+        run: crowdin status --no-progress > OBSNotifier/Localization/localization_status.txt
+
+      - name: Commit report
+        run: |
+          git config --global user.name 'Auto Updater'
+          git config --global user.email 'auto-updater@users.noreply.github.com'
+          git diff
+          git add -A
+          git commit -am "[CI] ↗️ Updated Localization"
+          git push
+
+          echo "## Changed files:" >> $GITHUB_STEP_SUMMARY
+          codeblock_tmp=$'```\nSTATS\n```'
+          echo "${codeblock_tmp//STATS/$(git diff --stat HEAD~)}" >> $GITHUB_STEP_SUMMARY

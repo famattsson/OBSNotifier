@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+    <!-- Use 
+ instead of \n -->
+    
+    <!-- Default Module -->
+    <v:String x:Key="default_module_name">Stapel meldingen</v:String>
+    <v:String x:Key="default_module_desc">Dit is de standaard notificatie module.
+Het toont een of meer meldingen in de hoek van het monitor.</v:String>
+
+    <!-- Nvidia-Like Module -->
+    <v:String x:Key="nvidia_like_module_name">Nvidia-Like</v:String>
+    <v:String x:Key="nvidia_like_module_desc">Eenvoudige melding vergelijkbaar met Nvidia's meldingen</v:String>
+
+</ResourceDictionary>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+    <!-- Use 
+ instead of \n -->
+    
+    <!-- Default Module -->
+    <v:String x:Key="default_module_name">Ilmoitusten pino</v:String>
+    <v:String x:Key="default_module_desc">Tämä on oletusilmoitusmoduuli.
+Se näyttää yhden tai useamman ilmoituksen jotka sijaitsevat monitorin kulmassa.</v:String>
+
+    <!-- Nvidia-Like Module -->
+    <v:String x:Key="nvidia_like_module_name">Nvidia-Like</v:String>
+    <v:String x:Key="nvidia_like_module_desc">Yksinkertainen ilmoitus samanlainen kuin Nvidian ilmoitukset</v:String>
+
+</ResourceDictionary>

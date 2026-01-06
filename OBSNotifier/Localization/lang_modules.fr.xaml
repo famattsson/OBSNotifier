@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+    <!-- Use 
+ instead of \n -->
+    
+    <!-- Default Module -->
+    <v:String x:Key="default_module_name">Pile de notifications</v:String>
+    <v:String x:Key="default_module_desc">Ceci est le module de notification par défaut.
+Il affiche une ou plusieurs notifications situées dans le coin de l'écran.</v:String>
+
+    <!-- Nvidia-Like Module -->
+    <v:String x:Key="nvidia_like_module_name">Nvidia-Like</v:String>
+    <v:String x:Key="nvidia_like_module_desc">Notification simple similaire aux notifications de Nvidia</v:String>
+
+</ResourceDictionary>

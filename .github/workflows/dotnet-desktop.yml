@@ -1,0 +1,74 @@
+name: .NET Desktop
+
+on:
+  push:
+    paths: [.github/**, "!.github/**/util_*", OBSNotifier/**, OBSNotifier.sln]
+  pull_request:
+    paths: [.github/**, "!.github/**/util_*", OBSNotifier/**, OBSNotifier.sln]
+  workflow_dispatch:
+
+# Stop the same workflow actions
+concurrency:
+  group: ${{github.workflow}}-${{github.event.pull_request.number || github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+
+    env:
+      Project_Name: OBSNotifier
+      Solution_Name: OBSNotifier.sln
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup Nuget
+        uses: Nuget/setup-nuget@v2
+
+      - name: Restore nuget packages
+        run: nuget restore ${{ env.Solution_Name }}
+
+      - name: Build solution
+        shell: powershell
+        run: msbuild ${{ env.Solution_Name }} /p:Configuration=${{ matrix.configuration }} /p:Platform="Any CPU"
+
+      - name: Prepare artifacts
+        if: matrix.configuration == 'Release'
+        shell: powershell
+        run: Remove-Item ${{ env.Project_Name }}/bin/${{ matrix.configuration }}/* -Include *.xml,*.pdb -Force
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.Project_Name}}_${{matrix.configuration}}
+          path: ${{env.Project_Name}}/bin/${{matrix.configuration}}/
+
+  push_translation:
+    name: Update localization sources
+    runs-on: ubuntu-24.04
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Crowdin Action
+        uses: crowdin/github-action@v2
+        with:
+          upload_sources: true
+        env:
+          CROWDIN_PROJECT_ID: ${{secrets.CROWDIN_PROJECT_ID}}
+          CROWDIN_PERSONAL_TOKEN: ${{secrets.CROWDIN_PERSONAL_TOKEN}}
